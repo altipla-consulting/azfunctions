@@ -50,6 +50,9 @@ func NewServer(opts ...ServerOption) *Server {
 		sentryClient: sentry.NewClient(os.Getenv("SENTRY_DSN")),
 		logLevel:     log.InfoLevel,
 	}
+	if env.IsLocal() {
+		server.logLevel = log.DebugLevel
+	}
 	for _, opt := range opts {
 		opt(server)
 	}
