@@ -3,7 +3,7 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/altipla-consulting/azfunctions.svg)](https://pkg.go.dev/github.com/altipla-consulting/azfunctions)
 
-Azure Functions framework does the routing of incoming requests, intercepts any logging and output that the function produces and returns the correct invocation result format back to Azure. It sends any error of the endpoints to Sentry and returns an improved standard error template.
+Azure Functions framework routes incoming requests, intercepts any logging and output that the function produces and returns the correct invocation result format back to Azure. It sends any error of the endpoints to Sentry and returns an improved standard error template if the function fails.
 
 
 ## Install
