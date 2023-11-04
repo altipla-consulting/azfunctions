@@ -118,7 +118,7 @@ func (server *Server) decorateHTTP(funcName string, methods []string, handler HT
 			return
 		}
 
-		logger.WithField("req", in.Data["req"]).Trace("Internal request received")
+		logger.WithField("req", string(in.Data["req"])).Trace("Internal request received")
 
 		inreq := new(invokeHTTPRequest)
 		if err := json.Unmarshal(in.Data["req"], inreq); err != nil {
