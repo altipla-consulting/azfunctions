@@ -171,7 +171,7 @@ func (server *Server) decorateHTTP(funcName string, methods []string, handler HT
 				return
 			}
 
-			log.WithFields(errors.LogFields(err)).Error("Handler failed")
+			logger.WithFields(errors.LogFields(err)).Error("Handler failed")
 			server.sentryClient.ReportRequest(r, err)
 
 			if ctx.Err() == context.DeadlineExceeded {
@@ -201,11 +201,13 @@ func renderError(w http.ResponseWriter, r *http.Request, status int) {
 	tmpl, err := template.New("error").Parse(errorTemplate)
 	if err != nil {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		log.WithField("error", err.Error()).Error("Cannot parse template")
+		LoggerFromRequest(r).WithField("error", err.Error()).Error("Cannot parse template")
+		return
 	}
 	if err := tmpl.Execute(w, status); err != nil {
 		http.Error(w, "Internal server error", http.StatusInternalServerError)
-		log.WithField("error", err.Error()).Error("Cannot execute template")
+		LoggerFromRequest(r).WithField("error", err.Error()).Error("Cannot execute template")
+		return
 	}
 }
 
